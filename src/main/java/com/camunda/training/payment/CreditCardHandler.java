@@ -35,7 +35,11 @@ public class CreditCardHandler implements ExternalTaskHandler {
         } catch (IllegalArgumentException e) {
             StringWriter sw = new StringWriter();
             e.printStackTrace(new PrintWriter(sw));
-            externalTaskService.handleFailure(externalTask, "credit card expired", sw.toString(), 0, 0);
+            externalTaskService.handleBpmnError(externalTask, "creditCardChargeError");
+        } catch (Exception e) {
+            StringWriter sw = new StringWriter();
+            e.printStackTrace(new PrintWriter(sw));
+            externalTaskService.handleFailure(externalTask, "unexpected error happened", sw.toString(), 0, 0);
         }
     }
 }
