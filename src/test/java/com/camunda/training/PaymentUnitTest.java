@@ -20,7 +20,7 @@ public class PaymentUnitTest {
     @Test
     public void happy_path_test() {
         ProcessInstance processInstance = runtimeService().startProcessInstanceByKey("PaymentProcess",
-            withVariables("orderTotal", 45.99, "customerCredit", 30.00));
+            withVariables("orderTotal", 45.99, "customerCredit", 30.00, "messageReceived", false));
         assertThat(processInstance).isWaitingAt(findId("Deduct customer credit")).externalTask()
             .hasTopicName("creditDeduction");
         complete(externalTask());
